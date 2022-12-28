@@ -20,7 +20,7 @@ const Navbar = () => {
         <Link to="/">Contact Us</Link>
       </li>
       <li>
-        <Link to="/">Login</Link>
+        <Link to="/login">Login</Link>
       </li>
     </React.Fragment>
   );
