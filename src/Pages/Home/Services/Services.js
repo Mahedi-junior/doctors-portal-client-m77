@@ -29,14 +29,14 @@ const Services = () => {
     },
   ];
   return (
-    <div className="mt-16">
+    <div className="mt-16 ">
       <div className="text-center">
         <h3 className="text-xl font-bold text-primary uppercase">
           Our Services
         </h3>
         <h2 className="text-3xl ">Services We Provide</h2>
       </div>
-      <div className="grid mt-8 mb-8 gap-8 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3">
+      <div className="grid mt-12 mb-8 gap-8 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3">
         {servicesData.map((service) => (
           <ServiceCard key={service.id} service={service}></ServiceCard>
         ))}
