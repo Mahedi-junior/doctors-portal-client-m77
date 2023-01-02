@@ -1,10 +1,14 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import { toast } from "react-hot-toast";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
   // treatment is just another name of  appointmentOptions with name,slots, _id
-  const { name, slots } = treatment;
+  const { name: treatmentName, slots } = treatment;
   const date = format(selectedDate, "PP");
+
+  const { user } = useContext(AuthContext);
 
   const handleBooking = (event) => {
     event.preventDefault();
@@ -17,18 +21,33 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
 
     const booking = {
       appointmentDate: date,
-      treatment: name,
+      treatment: treatmentName,
       patient: name,
       slot,
       email,
       phone,
     };
     console.log(booking);
-    setTreatment(null);
 
     // TODO: Send data to the server
     //  and once data is saved then close the modal
     // and display success toast
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          setTreatment(null);
+          toast.success("Booking confirmed");
+        }
+      });
   };
 
   return (
@@ -42,7 +61,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold">{name}</h3>
+          <h3 className="text-lg font-bold">{treatmentName}</h3>
 
           <form
             onSubmit={handleBooking}
@@ -63,6 +82,8 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
             <input
               name="name"
               type="text"
+              defaultValue={user?.displayName}
+              disabled
               placeholder="Your Name"
               className="input input-bordered w-full"
             />
@@ -70,6 +91,8 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
             <input
               name="email"
               type="email"
+              defaultValue={user?.email}
+              disabled
               placeholder="Your Email"
               className="input input-bordered w-full"
             />
