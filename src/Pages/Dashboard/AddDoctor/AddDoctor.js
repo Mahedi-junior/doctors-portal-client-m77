@@ -10,6 +10,7 @@ const AddDoctor = () => {
     formState: { errors },
   } = useForm();
   const imageHostKey = process.env.REACT_APP_imgbb_Key;
+  //   console.log(imageHostKey);
 
   const { data: specialties, isLoading } = useQuery({
     queryKey: ["specialty"],
@@ -19,9 +20,22 @@ const AddDoctor = () => {
       return data;
     },
   });
-
   const handleAddDoctor = (data) => {
-    console.log(data);
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          console.log(imgData.data.url);
+        }
+        console.log(imgData);
+      });
   };
 
   if (isLoading) {
@@ -82,7 +96,7 @@ const AddDoctor = () => {
           </label>
           <input
             type="file"
-            {...register("img", { required: "Photo is Required" })}
+            {...register("image", { required: "Photo is Required" })}
             className="input input-bordered "
           />
           {errors.img && <p className="text-red-600">{errors.img?.message}</p>}
