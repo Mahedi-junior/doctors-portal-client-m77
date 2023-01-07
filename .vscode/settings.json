@@ -1,0 +1,7 @@
+{
+  "editor.wordWrap": "off",
+  "editor.language.colorizedBracketPairs": [],
+  "editor.wrappingIndent": "same",
+  "editor.wordWrapColumn": 80,
+  "diffEditor.wordWrap": "off"
+}
