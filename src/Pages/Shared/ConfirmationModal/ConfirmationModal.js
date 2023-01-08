@@ -19,7 +19,7 @@ const ConfirmationModal = ({
             <label
               onClick={() => successAction(modalData)}
               htmlFor="confirmation-modal"
-              className="btn"
+              className="btn btn-error"
             >
               {successButtonName}
             </label>
