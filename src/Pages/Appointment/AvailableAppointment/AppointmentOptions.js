@@ -1,7 +1,7 @@
 import React from "react";
 
 const AppointmentOptions = ({ appointmentOption, setTreatment }) => {
-  const { name, slots } = appointmentOption;
+  const { name, slots, price } = appointmentOption;
   return (
     <div className="card shadow-xl">
       <div className="card-body text-center">
@@ -9,9 +9,13 @@ const AppointmentOptions = ({ appointmentOption, setTreatment }) => {
           {name}
         </h2>
         <p>{slots.length > 0 ? slots[0] : "Try Another Day"}</p>
+
         <p>
           {slots.length} {slots.length > 1 ? "spaces" : "space"} spaces
           available
+        </p>
+        <p>
+          <>Price: ${price}</>
         </p>
         <div className="card-actions justify-center">
           <label
